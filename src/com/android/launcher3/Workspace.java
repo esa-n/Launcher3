@@ -1171,6 +1171,9 @@ public class Workspace extends PagedView
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (mLauncher.isAllAppsVisible()) {
+            return true;
+        }
         switch (ev.getAction() & MotionEvent.ACTION_MASK) {
         case MotionEvent.ACTION_DOWN:
             mXDown = ev.getX();
@@ -1414,6 +1417,11 @@ public class Workspace extends PagedView
         if (shouldZeroOverlay) {
             mLauncherOverlay.onScrollChange(0, mIsRtl);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return mLauncher.isAllAppsVisible() || super.onTouchEvent(ev);
     }
 
     @Override
